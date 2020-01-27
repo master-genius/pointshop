@@ -57,7 +57,7 @@ class oauthlogin {
     }, c));
     //c.setHeader('Location', '/page/user');
     //c.status(301);
-    c.send(await c.helper.readFile(c.service.pagedir+'/login.html'));
+    c.res.body = await c.helper.readFile(c.service.pagedir+'/login.html');
   }
 
 }
