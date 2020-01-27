@@ -64,10 +64,13 @@ async function logSubUser(wxmsg, db, retmsg) {
     return formatMsg(retmsg);
   }
 
-  var sql = 'INSERT INTO users(id, openid) VALUES ($1, $2)';
+  var sql = 'INSERT INTO users(id, openid, regtime) VALUES ($1, $2, $3)';
+  var dt = new Date();
 
   r = await db.query(sql, [
-    `${wxmsg.FromUserName.substring(0, 8)}${Date.now()}`, wxmsg.FromUserName
+    `${wxmsg.FromUserName.substring(0, 8)}${Date.now()}`,
+    wxmsg.FromUserName,
+    `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()} ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
   ]);
 
   if (r.rowCount <= 0) {
