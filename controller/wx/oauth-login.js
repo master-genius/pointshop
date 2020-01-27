@@ -22,7 +22,7 @@ class oauthlogin {
   async get (c) {
 
     var code = c.query.code;
-    var token_url = ` https://api.weixin.qq.com/sns/oauth2/access_token`
+    var token_url = `https://api.weixin.qq.com/sns/oauth2/access_token`
       + `?appid=${c.service.config.appid}&secret=${c.service.config.secret}&code=${code}`
       + `&grant_type=authorization_code`;
 
