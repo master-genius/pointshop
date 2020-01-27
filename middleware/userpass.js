@@ -1,4 +1,5 @@
 module.exports = async (c, next) => {
+  console.log(cookies);
   if (c.cookies['token'] === undefined) {
     c.status(301);
     c.setHeader('Location', '/wx/oauth-code');
