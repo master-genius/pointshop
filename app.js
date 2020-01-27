@@ -1,14 +1,26 @@
+process.chdir(__dirname);
+
 const titbit = require('titbit');
 const titloader = require('titbit-loader');
 const pg = require('pg');
 const gohttp = require('gohttp');
+const cfg = require('config');
+const cluster = require('cluster');
+const dbcfg = require('./dbconfig.json');
 
 var app = new titbit({
   debug : true,
 });
 
-var tld = new titloader();
+if (cluster.isWorker) {
 
-tld.init(app);
+  app.service.config = cfg;
+  app.service.db = new pg.Pool(dbcfg);
+  app.service.http = gohttp;
+  app.service.pagedir = __dirname + '/pages';
 
-app.run(8080);
+  var tld = new titloader();
+  tld.init(app);
+}
+
+app.daemon(8080,'0.0.0.0', 2);
