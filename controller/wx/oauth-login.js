@@ -14,9 +14,9 @@ class oauthlogin {
   }
 
   setCookie(ck, c) {
-    return encodeURIComponent(`token=${ck.token};nickname=${ck.nickname};Path=/;`
+    return `token=${ck.token};nickname=${encodeURIComponent(ck.nickname)};Path=/;`
       +`Expires=${(new Date(Date.now() + 3600000)).toString()};`
-      +`Domain=${c.service.config.domain}`);
+      +`Domain=${c.service.config.domain}`;
   }
 
   async get (c) {
