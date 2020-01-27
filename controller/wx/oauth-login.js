@@ -50,14 +50,14 @@ class oauthlogin {
       c.send('Error: 授权登录出错，请稍后再试或联系管理员。');
       return ;
     }
-
+/* 
     c.setHeader('Set-Cookie', this.setCookie({
       nickname : wxuser.nickname,
       token : token
-    }, c));
-    //c.setHeader('Location', '/page/user');
-    //c.status(301);
-    c.res.body = await c.helper.readFile(c.service.pagedir+'/login.html');
+    }, c)); */
+    c.setHeader('Location', 
+      `/page/user?token=${token}&nickname=${encodeURIComponent(wxuser.nickname)}`);
+    c.status(301);
   }
 
 }
