@@ -13,6 +13,7 @@
     "gohttp": "^2.1.0",
     "pg": "^7.17.1",
     "titbit": "^5.1.7",
-    "titbit-loader": "^2.0.0"
+    "titbit-loader": "^2.0.0",
+    "xml2js": "^0.4.23"
   }
 }
