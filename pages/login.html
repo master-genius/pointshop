@@ -8,7 +8,7 @@
 <body>
   <div id="main"></div>
   <script>
-    document.getElementById('main').innerHTML = document.cookie;
+    document.getElementById('main').innerHTML = decodeURIComponent(document.cookie);
   </script>
 </body>
 </html>
