@@ -8,7 +8,11 @@
 <body>
   <div id="main"></div>
   <script>
-    document.getElementById('main').innerHTML = decodeURIComponent(document.cookie);
+    var cookieText = decodeURIComponent(document.cookie);
+    document.getElementById('main').innerHTML = cookieText;
+    if (cookieText.indexOf('token') >= 0) {
+      location.href = '/page/user';
+    }
   </script>
 </body>
 </html>

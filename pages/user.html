@@ -8,7 +8,8 @@
 <body>
   <div id="main"></div>
   <script>
-    document.getElementById('main').innerHTML = document.cookie;
+    var cookieText = decodeURIComponent(document.cookie);
+    document.getElementById('main').innerHTML = cookieText + '<br>user';
   </script>
   <script>
     /* function checkToken () {
