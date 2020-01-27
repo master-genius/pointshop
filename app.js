@@ -6,7 +6,7 @@ const xmlparse = require('xml2js').parseString;
 const wxmsg = require('./msghandle');
 const pg = require('pg');
 const gohttp = require('gohttp');
-const cfg = require('config');
+const cfg = require('./config/config');
 const cluster = require('cluster');
 const dbcfg = require('./dbconfig.json');
 
