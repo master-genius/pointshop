@@ -26,7 +26,7 @@ class oauthlogin {
       + `?appid=${c.service.config.appid}&secret=${c.service.config.secret}&code=${code}`
       + `&grant_type=authorization_code`;
 
-    var t = await c.service.http.get(token_url);
+    var t = await c.service.http.get(token_url, {encoding:'utf8'});
     t = JSON.parse(t);
 
     if (t.access_token === undefined) {
@@ -38,7 +38,7 @@ class oauthlogin {
     var userinfo_url = `https://api.weixin.qq.com/sns/userinfo`
       + `?access_token=${t.access_token}&openid=${t.openid}&lang=zh_CN`;
 
-    var u = await c.service.http.get(userinfo_url);
+    var u = await c.service.http.get(userinfo_url, {encoding:'utf8'});
     var wxuser = JSON.parse(u);
     var token = this.makeToken(t.openid, c.helper.sha1);
     let r = await c.service.db.query(this.update_sql, [
