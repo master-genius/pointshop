@@ -5,8 +5,7 @@ class user {
   }
 
   async get (c) {
-    var pagedata = await c.helper.readFile(c.service.pagedir+'/user.html');
-    c.send(pagedata);
+    c.res.body = await c.helper.readFile(c.service.pagedir+'/user.html');
   }
 
 }
