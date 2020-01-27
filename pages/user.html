@@ -8,8 +8,22 @@
 <body>
   <div id="main"></div>
   <script>
-    var cookieText = decodeURIComponent(document.cookie);
-    document.getElementById('main').innerHTML = cookieText + '<br>user';
+    var urlText = decodeURIComponent(location.href);
+    document.getElementById('main').innerHTML = urlText;
+    var urlarr = urlText.split('&');
+    var urlobj = {};
+    var tmp = '';
+    for(let i=0; i<urlarr.length; i++) {
+      tmp = urlarr[i].split('=');
+      if (tmp.length <= 0) {
+        continue;
+      }
+      if (tmp.length < 2) {
+        tmp.push('');
+      }
+      urlobj[tmp[0]] = tmp[1];
+    }
+    document.body.innerHTML += urlText;
   </script>
   <script>
     /* function checkToken () {

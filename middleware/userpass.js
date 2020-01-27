@@ -1,12 +1,13 @@
 module.exports = async (c, next) => {
 
-  if (c.query.token === undefined) {
+  var token = c.query.token || c.cookies['token'];
+
+  if (token === undefined) {
     c.status(301);
     c.setHeader('Location', '/wx/oauth-code');
     return ;
   }
-
-  var token = c.query.token;
+  
   var sql = 'SELECT id,openid,wxinfo,token,role,outtime FROM users WHERE token=$1';
   var r = await c.service.db.query(sql, [token]);
   if (r.rowCount <= 0 || r.rows[0].outtime <= parseInt(Date.now() / 1000 ) ) {
