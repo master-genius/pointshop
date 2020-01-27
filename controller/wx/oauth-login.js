@@ -55,8 +55,9 @@ class oauthlogin {
       nickname : wxuser.nickname,
       token : token
     }, c));
-    c.setHeader('Location', '/page/user');
-    c.status(301);
+    //c.setHeader('Location', '/page/user');
+    //c.status(301);
+    c.send(await c.helper.readFile(c.service.pagedir+'/login.html'));
   }
 
 }
