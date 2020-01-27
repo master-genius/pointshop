@@ -1,7 +1,7 @@
 class oauthcode {
 
   constructor () {
-
+    this.param = '/';
   }
 
   formatCodeUrl (appid, redirect, state) {

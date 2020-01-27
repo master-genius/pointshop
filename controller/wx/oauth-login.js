@@ -1,6 +1,7 @@
 class oauthlogin {
 
   constructor () {
+    this.param = '/';
     this.update_sql = 'UPDATE users set token=$1,outtime=$2,wxinfo=$3 WHERE openid=$4';
   }
 
