@@ -1,4 +1,4 @@
-class point {
+class user {
 
   constructor () {
 
@@ -22,4 +22,4 @@ class point {
 
 }
 
-module.exports = point;
+module.exports = user;
