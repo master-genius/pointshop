@@ -13,7 +13,7 @@ class point {
   }
 
   async post (c) {
-
+    
   }
 
   async put (c) {
