@@ -42,16 +42,20 @@ function userMsg (wxmsg, retmsg) {
 }
 
 function clickHandle (wxmsg, retmsg) {
-    switch (wxmsg.EventKey) {
-        case 'help':
-        case 'aboutus':
-          retmsg.msgtype = 'text';
-          retmsg.msg = help();
-          return formatMsg(retmsg);
-        case 'register':
-          return logSubUser(wxmsg, retmsg.db, retmsg);
-    }
-    return '';
+  switch (wxmsg.EventKey) {
+    case 'help':
+    case 'aboutus':
+      retmsg.msgtype = 'text';
+      retmsg.msg = help();
+      return formatMsg(retmsg);
+    case 'register':
+      return logSubUser(wxmsg, retmsg.db, retmsg);
+    case 'openid':
+      retmsg.msgtype = 'text';
+      retmsg.msg = wxmsg.FromUserName;
+      return formatMsg(retmsg);
+  }
+  return '';
 }
 
 async function logSubUser(wxmsg, db, retmsg) {
