@@ -85,3 +85,5 @@ point.prototype.count = async function (user_id) {
   }
   return r.rows[0]['total'];
 };
+
+module.exports = point;
