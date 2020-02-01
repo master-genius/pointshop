@@ -37,3 +37,27 @@
 ### 会话处理逻辑
 
 ![](images/积分系统会话处理逻辑.png)
+
+### 积分管理接口
+
+**提交垃圾收取信息并获取积分验证码**
+
+```
+请求：POST
+接口：/user/point
+
+提交数据格式：JSON文本
+content-type设置为text/plain
+
+数据字段:
+
+{
+    "point_type" : ""
+    "points" : "",
+    "post_trash" : "",
+    "trash_weight" : "",
+    "trash_type" : ""
+}
+
+
+```
