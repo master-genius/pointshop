@@ -6,6 +6,46 @@ function help () {
   return helpinfo;
 }
 
+async function setPointCode(wxmsg, db, retmsg) {
+  var r = null;
+
+  retmsg,msgtype = 'text';
+
+  var p = await db.query(
+    'SELECT id,point_type,points,verify_code,code_time,point_status FROM point_log WHERE verify_code=$1',
+    [wxmsg.Content]
+  );
+
+  if (p.rowCount<=0 
+      || p.rows[0]['code_time'] < parseInt(Date.now() / 1000)
+      || p.rows[0]['point_status'] != 0
+    )
+  {
+    retmsg.msg = '不正确的验证码';
+    return formatMsg(retmsg);
+  }
+
+  await db.query('BEGIN');
+
+  await db.query('UPDATE point_log SET point_status=1,openid=$1 WHERE id=$2', [
+    wxmsg.FromUserName, p.rows[0].id
+  ]);
+  
+  db.query(
+    `UPDATE users SET points = points+${p.rows[0].points} WHERE openid=$1`,
+    [wxmsg.FromUserName]
+  );
+
+  r = await db.query('COMMIT');
+
+  if (r.rowCount <= 0) {
+    retmsg.msg = '设置积分失败，请联系管理员';
+    return formatMsg(retmsg);
+  }
+  retmsg.msg = '设置积分成功';
+  return formatMsg(retmsg);
+}
+
 /*
  * @param {object} wxmsg 解析XML消息的对象
  * @param {object} retmsg 要返回的数据对象
@@ -13,18 +53,21 @@ function help () {
 function userMsg (wxmsg, retmsg) {
     //关键字自动回复
     if (wxmsg.MsgType == 'text') {
-        switch (wxmsg.Content) {
-            case '帮助':
-            case 'help':
-            case '?':
-            case 'about':
-            case 'aboutus':
-                retmsg.msg = help();
-                retmsg.msgtype = 'text';
-                return formatMsg(retmsg);
-            default:
-              return '';
-        }
+      if (wxmsg.Content[0] == '1' && wxmsg.Content.length == 7) {
+        return setPointCode(wxmsg, retmsg.db, retmsg);
+      }
+      switch (wxmsg.Content) {
+          case '帮助':
+          case 'help':
+          case '?':
+          case 'about':
+          case 'aboutus':
+              retmsg.msg = help();
+              retmsg.msgtype = 'text';
+              return formatMsg(retmsg);
+          default:
+            return '';
+      }
     }
     //处理其他类型的消息
     switch (wxmsg.MsgType) {

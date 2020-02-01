@@ -17,6 +17,19 @@ var point = function (db) {
 
 };
 
+point.prototype.makeCode = () => {
+  var charr = [
+    '2','3','4','5','6','7','8','9','2','5','8','6'
+  ];
+
+  let tmp = '';
+  for (let i=0; i < 6; i++) {
+    tmp += charr[ parseInt(Math.random() * 50) % charr.length ];
+  }
+
+  return `1${tmp}`;
+};
+
 point.prototype.get = async function () {
   var sql = 'SELECT ';
 };
@@ -29,8 +42,12 @@ point.prototype.insert = async function (user_id, admin_id, data) {
   r = await this.db.query(usql, [ data.points, user_id ]);
 
   var sql = 'INSERT INTO point_log'
-      +'(id,user_id,logtime,year,point_type,post_trash,trash_weight,trash_type,points)'
-      +' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+      +'(id,user_id,logtime,year,point_type,post_trash,trash_weight,'
+      +'trash_type,points,verify_code, code_time)'
+      +' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
+
+  data.verify_code = this.makeCode();
+  data.code_time = parseInt((Date.now() / 1000) + 3600);
   data.id = this.makeId(user_id);
 
   var d = new Date();
@@ -42,7 +59,8 @@ point.prototype.insert = async function (user_id, admin_id, data) {
   r = await this.db.query(sql, [
     data.id, data.user_id, data.logtime, 
     data.year, data.point_type, data.post_trash,
-    data.trash_weight, data.trash_type, data.points
+    data.trash_weight, data.trash_type, data.points,
+    data.verify_code,data.code_time
   ]);
 
   await this.db.query('COMMIT');
@@ -50,7 +68,7 @@ point.prototype.insert = async function (user_id, admin_id, data) {
   if (r.rowCount<=0) {
     return false;
   }
-  return true;
+  return data.verify_code;
 };
 
 point.prototype.delete = function () {
