@@ -108,3 +108,26 @@ content-type设置为text/plain
 }
 ```
 
+**获取积分记录**
+
+```
+请求：GET
+路径：/user/point
+URL参数：offset表示偏移量，表示从第几个记录开始，year是四位数字表示年份，默认为当前年份。
+URL参数都不是必须的，offset默认为0。每次返回20条数据。要做分页处理需要使用获取积分记录总数配合。
+
+返回值：
+{
+    "status" : "OK",
+    "data" : [
+        {
+            "id" : "",
+            "point_type" : "",
+            "points" : "",
+            "trash_weight" : ""
+        }
+    ]
+}
+
+```
+
