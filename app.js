@@ -9,6 +9,7 @@ const gohttp = require('gohttp');
 const cfg = require('./config/config');
 const cluster = require('cluster');
 const dbcfg = require('./dbconfig.json');
+const crypto = require('crypto');
 
 var app = new titbit({
   debug : true,
