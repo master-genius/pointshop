@@ -16,7 +16,7 @@ class point {
       }
       c.res.body = {
         status : 'OK',
-        data : await c.service.model.point.list(c.box.user.id, offset, year);
+        data : await c.service.model.point.list(c.box.user.id, offset, year)
       };
     } catch (err) {
       c.res.body = {
