@@ -10,6 +10,7 @@ const cfg = require('./config/config');
 const cluster = require('cluster');
 const dbcfg = require('./dbconfig.json');
 const crypto = require('crypto');
+const porm = require('psqlorm');
 
 var app = new titbit({
   debug : true,
@@ -19,10 +20,13 @@ if (cluster.isWorker) {
 
   app.service.config = cfg;
   app.service.db = new pg.Pool(dbcfg);
+  app.service.pgorm = new porm(app.service.db);
   app.service.http = gohttp;
   app.service.pagedir = __dirname + '/pages';
 
-  var tld = new titloader();
+  var tld = new titloader({
+    mdb : app.service.pgorm
+  });
   tld.init(app);
 }
 
