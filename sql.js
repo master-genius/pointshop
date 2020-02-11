@@ -13,6 +13,8 @@ var sqls = [
   //"create table if not exists point_goods(id varchar(40) primary key, goods_name, point integer, )"
 
   //"create table if not exists trash_log (id varchar(40) primary key, logtime timestamp not null, year )"
+
+  "create table if not exists trash_point(id varchar(40) primary key, trash_type varchar(20) not null default '', weight decimal(5,2) not null default 1, point integer not null default 1, cash decimal(5,2) not null default 0.01)"
 ];
 
 var pgdb = new pg.Client(dbcfg);
