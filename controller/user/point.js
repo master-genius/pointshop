@@ -51,7 +51,7 @@ class point {
         status : 'EBADDATA',
         errmsg : '数据错误'
       };
-    }   
+    }
   }
 
   async put (c) {
