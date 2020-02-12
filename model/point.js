@@ -59,6 +59,7 @@ point.prototype.insert = async function (user_id, admin_id, data) {
   if (r.error === null) {
     return data.verify_code;
   }
+  console.log(r.error);
   return false;
 };
 

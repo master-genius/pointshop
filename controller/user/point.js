@@ -47,6 +47,7 @@ class point {
         };
       }
     } catch (err) {
+      console.log(err);
       c.res.body = {
         status : 'EBADDATA',
         errmsg : '数据错误'
