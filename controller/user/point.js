@@ -33,6 +33,7 @@ class point {
 
   async post (c) {
     try {
+      console.log(c.body);
       let pdata = JSON.parse(c.body);
       let r = await c.service.model.point.insert(c.box.user.id,c.box.user.id, pdata);
       if (r === false) {
