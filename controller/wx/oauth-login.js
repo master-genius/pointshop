@@ -47,7 +47,7 @@ class oauthlogin {
 
     if (r.rowCount <= 0) {
       c.status(500);
-      c.send('Error: 授权登录出错，请稍后再试或联系管理员。');
+      c.send('Error: 授权登录出错，请点击注册，若已注册请联系管理员。');
       return ;
     }
 /* 
