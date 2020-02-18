@@ -58,7 +58,9 @@ class oauthlogin {
     c.setHeader('Location', 
       `/page/user`
       +`?token=${token}&nickname=${encodeURIComponent(wxuser.nickname)}`
-      +`&headimg=${encodeURIComponent(wxuser.headimg)}`
+      +`&headimgurl=${encodeURIComponent(wxuser.headimgurl)}`
+      +`province=${encodeURIComponent(wxuser.province)}`
+      +`city=${encodeURIComponent(wxuser.city)}`
     );
     c.status(301);
   }
