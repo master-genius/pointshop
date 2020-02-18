@@ -12,6 +12,7 @@ class pcount {
         data : total
       };
     } catch (err) {
+      console.log(err);
       c.res.body = {
         status : 'EFAILED',
         errmsg : 'Error: 暂时无法获取总数'

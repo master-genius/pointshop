@@ -56,7 +56,10 @@ class oauthlogin {
       token : token
     }, c)); */
     c.setHeader('Location', 
-      `/page/user?token=${token}&nickname=${encodeURIComponent(wxuser.nickname)}`);
+      `/page/user`
+      +`?token=${token}&nickname=${encodeURIComponent(wxuser.nickname)}`
+      +`&headimg=${encodeURIComponent(wxuser.headimg)}`
+    );
     c.status(301);
   }
 

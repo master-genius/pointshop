@@ -6,6 +6,13 @@ function help () {
   return helpinfo;
 }
 
+/**
+ * 
+ * @param {*} wxmsg 
+ * @param {*} db 
+ * @param {*} retmsg 
+ * 设置积分
+ */
 async function setPointCode(wxmsg, db, retmsg) {
   var r = null;
 
@@ -43,6 +50,24 @@ async function setPointCode(wxmsg, db, retmsg) {
     return formatMsg(retmsg);
   }
   retmsg.msg = '设置积分成功';
+  return formatMsg(retmsg);
+}
+
+async function getPoints (wxmsg, db, retmsg) {
+  try {
+    retmsg.msgtype = 'text';
+
+    let r = await db.query('SELECT points FROM users WHERE openid=$1', 
+      [wxmsg.FromUserName]
+    );
+    if (r.rowCount <= 0) {
+      retmsg.msg = '未发现用户，请点击注册';
+    } else {
+      retmsg.msg = `积分：${r.rows[0].points}`;
+    }
+  } catch (err) {
+    retmsg.msg = '系统错误，请稍候再获取积分';
+  }
   return formatMsg(retmsg);
 }
 
@@ -97,6 +122,8 @@ function clickHandle (wxmsg, retmsg) {
       retmsg.msgtype = 'text';
       retmsg.msg = wxmsg.FromUserName;
       return formatMsg(retmsg);
+    case 'points':
+      return getPoints(wxmsg, retmsg.db, retmsg);
   }
   return '';
 }
