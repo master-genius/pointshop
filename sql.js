@@ -14,7 +14,10 @@ var sqls = [
 
   //"create table if not exists trash_log (id varchar(40) primary key, logtime timestamp not null, year )"
 
-  "create table if not exists trash_point(id varchar(40) primary key, trash_type varchar(20) not null default '', weight decimal(5,2) not null default 1, point integer not null default 1, cash decimal(5,2) not null default 0.01)"
+  "create table if not exists trash_class(id varchar(40) primary key, tname varchar(30) not null default '')",
+
+  "create table if not exists trash_point(id varchar(40) primary key, trash_class_id varchar(40) not null default '', tname varchar(30) not null default '', weight decimal(5,2) not null default 1, point integer not null default 1, cash decimal(5,2) not null default 0.01)"
+
 ];
 
 var pgdb = new pg.Client(dbcfg);
