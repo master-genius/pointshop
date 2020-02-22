@@ -1,8 +1,7 @@
 const formatMsg = require('./fmtwxmsg');
 
 function help () {
-  let helpinfo = '这是道简网络科技服务号，关注技术和生活，通过技术、思考、吸纳、整理，提供综合性信息服务。\n';
-  helpinfo += '合作可以发送邮件到管理员邮箱：1146040444@qq.com';
+  let helpinfo = '莫得乐色，专注于垃圾回收，用互联网技术服务于大众。\n';
   return helpinfo;
 }
 
