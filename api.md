@@ -66,16 +66,17 @@
 
 ```
 请求：GET
-接口：/trash/type
+接口：/trash/class/:id
+:id是参数，要替换为具体的分类id，比如/trash/class/yi-la-guan
 返回值：
 {
     "status" : "OK",
     "data" : [
         {
             "id" : "...",
-            "tname" : "...",
-            "cash" : "",
-            "weight" : ""
+            "tname" : "...", //子分类名称
+            "cash" : "",   //1积分对应金额
+            "weight" : "" //1积分对应称重
         },
         {
             "id" : "...",
