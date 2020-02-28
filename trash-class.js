@@ -36,7 +36,7 @@ module.exports = {
   '塑料类@suliaolei' : {
     '塑料水桶@suliaoshuitong' : [0.75, 75],
     '塑料餐具@suliaocanju' : [0.75, 75],
-    '塑料玩具@' : [0.75, 75],
+    '塑料玩具@suliaowanju' : [0.75, 75],
     '洗漱品@xishupin' : [0.75, 75],
     '键盘@jianpan' : [0.75, 75],
     '塑料壳@suliaoke' : [0.75, 75],

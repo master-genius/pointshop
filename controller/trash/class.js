@@ -2,6 +2,7 @@
 
 class trashclass {
   constructor () {
+    
   }
 
   async get (c) {

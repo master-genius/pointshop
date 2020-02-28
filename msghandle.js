@@ -17,23 +17,21 @@ async function setPointCode(wxmsg, db, retmsg) {
 
   retmsg,msgtype = 'text';
 
+  var checkTm = parseInt(Date.now() / 1000) - 1200;
+
   var p = await db.query(
-    'SELECT id,point_type,points,verify_code,code_time,point_status FROM point_log WHERE verify_code=$1',
-    [wxmsg.Content]
+    'SELECT id,point_type,points,verify_code,code_time,point_status FROM point_log WHERE verify_code=$1 AND code_time >= $2 AND code_status = 0',
+    [wxmsg.Content, checkTm]
   );
 
-  if (p.rowCount<=0 
-      || p.rows[0]['code_time'] < parseInt(Date.now() / 1000)
-      || p.rows[0]['point_status'] != 0
-    )
-  {
+  if (p.rowCount<=0) {
     retmsg.msg = '不正确的验证码';
     return formatMsg(retmsg);
   }
 
   await db.query('BEGIN');
 
-  await db.query('UPDATE point_log SET point_status=1,openid=$1 WHERE id=$2', [
+  await db.query('UPDATE point_log SET code_status=1,openid=$1 WHERE id=$2', [
     wxmsg.FromUserName, p.rows[0].id
   ]);
   
