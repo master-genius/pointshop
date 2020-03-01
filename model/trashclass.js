@@ -27,3 +27,5 @@ trashclass.prototype.getSubClass = async function (id) {
         .where('trash_class_id=?', [id])
         .select('id,tname,cash,point,weight');
 };
+
+module.exports = trashclass;

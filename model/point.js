@@ -71,7 +71,7 @@ point.prototype.insert = async function (admin_id, data) {
     return false;
   }
 
-  data.points = r.rows[0].point * data.trash_weight;
+  data.points = parseInt(r.rows[0].point * data.trash_weight);
 
   r = await this.db.table('point_log').insert(data);
   if (r.rowCount > 0) {
@@ -79,6 +79,7 @@ point.prototype.insert = async function (admin_id, data) {
   }
   console.log(r.error);
   return false;
+  
 };
 
 point.prototype.delete = function () {
