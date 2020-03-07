@@ -12,12 +12,12 @@ class trashclass {
       c.res.body = {
         status : 'OK',
         data : r.rows
-      }
+      };
     } catch (err) {
       c.res.body = {
         status : 'EFAILED',
         errmsg : '获取子类失败'
-      }
+      };
     }
   }
 

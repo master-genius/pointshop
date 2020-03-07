@@ -12,7 +12,11 @@ var sqls = [
 
   "create table if not exists trash_class(id varchar(40) primary key, tname varchar(30) not null default '')",
 
-  "create table if not exists trash_point(id varchar(40) primary key, trash_class_id varchar(40) not null default '', tname varchar(30) not null default '', weight decimal(5,2) not null default 1, point integer not null default 1, cash decimal(5,2) not null default 0.01)"
+  "create table if not exists trash_point(id varchar(40) primary key, trash_class_id varchar(40) not null default '', tname varchar(30) not null default '', weight decimal(5,2) not null default 1, point integer not null default 1, cash decimal(5,2) not null default 0.01)",
+
+  "create table if not exists trash_goods (id varchar(40) primary key, goods_name varchar(100) not null default '', points integer not null default 0, goods_image text not null default '', storage integer not null default 0)",
+
+  "create table if not exists point_order(id varchar(40) primary key, user_id varchar(40) not null default '', order_time timestamp not null default '', timeint integer not null default 0, order_status smallint not null default 0)"
 
 ];
 

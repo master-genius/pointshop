@@ -8,6 +8,7 @@ class point {
   async get (c) {
 
   }
+  
 }
 
 module.exports = point;
