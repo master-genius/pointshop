@@ -3,7 +3,13 @@ class order {
 
   }
 
-  
+  async get (c) {
+    
+  }
+
+  async put (c) {
+
+  }
 
 }
 
