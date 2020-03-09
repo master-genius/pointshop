@@ -63,7 +63,7 @@ point.prototype.insert = async function (admin_id, data) {
 
   r = await _db.table('trash_point')
         .where('id=?',[data.trash_type])
-        .get('weight,cash,point');
+        .select('weight,cash,point');
   
   if (r.rowCount <= 0 ) {
     return false;
