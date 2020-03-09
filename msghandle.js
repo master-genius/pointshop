@@ -48,6 +48,7 @@ async function setPointCode(wxmsg, db, retmsg) {
       return formatMsg(retmsg);
     }
   } catch (err) {
+    console.log(err);
     db.query('ROLLBACK');
     retmsg.msg = '设置积分失败，请联系管理员';
     return formatMsg(retmsg);
