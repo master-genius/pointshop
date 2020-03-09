@@ -23,7 +23,7 @@ var test_users = [
   {
     id : 'test_102',
     username : 'TestB',
-    openid : 'test_101_wx',
+    openid : 'test_102_wx',
     role : 'user',
     regtime : '2020-02-28',
     token : 'test102b20200228',

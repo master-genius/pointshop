@@ -2,7 +2,18 @@
 
 ----
 
-所有接口都在域名：https://api.modelese.cn/ 下。所有接口遵循RESTFul模式，所有提交数据的格式都按照JSON文本提交。消息头content-type统一设置为text/plain，注意不需要设置成application/json，程序会自动解析处理。
+**所有接口都在域名：https://api.modelese.cn/ 下。所有接口遵循RESTFul模式，所有提交数据的格式都按照JSON文本提交。消息头content-type统一设置为text/plain，注意不需要设置成application/json，程序会自动解析处理。**
+
+### 测试用户信息
+
+
+| id | openid | role | token |
+| ---- | ---- | ---- | ---- |
+| test_101 | test_101_wx | user | test101a20200228 |
+| test_102 | test_102_wx | user | test102a20200228 |
+| test_admin | test_admin_wx | user | testadmina20200228 |
+
+
 
 ### 权限
 
