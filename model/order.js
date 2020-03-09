@@ -30,3 +30,4 @@ order.prototype.update = function (user_id, data) {
 };
 
 
+module.exports = order;
