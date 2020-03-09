@@ -111,9 +111,6 @@ content-type设置为text/plain
 数据字段:
 
 {
-    "point_type" : ""
-    "points" : "",
-    "post_trash" : "",
     "trash_weight" : "",
     "trash_type" : ""
 }
