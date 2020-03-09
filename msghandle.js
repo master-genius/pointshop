@@ -15,7 +15,7 @@ function help () {
 async function setPointCode(wxmsg, db, retmsg) {
   var r = null;
 
-  retmsg,msgtype = 'text';
+  retmsg.msgtype = 'text';
 
   var checkTm = parseInt(Date.now() / 1000) - 1200;
 
