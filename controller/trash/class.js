@@ -14,6 +14,7 @@ class trashclass {
         data : r.rows
       };
     } catch (err) {
+      console.log(err);
       c.res.body = {
         status : 'EFAILED',
         errmsg : '获取子类失败'
