@@ -42,7 +42,7 @@ point.prototype.get = async function () {
 point.prototype.insert = async function (admin_id, data) {
   data.verify_code = this.makeCode();
   data.code_time = parseInt(Date.now() / 1000);
-  data.id = this.makeId(user_id);
+  data.id = this.makeId(admin_id);
 
   var d = new Date();
   data.logtime = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`;
