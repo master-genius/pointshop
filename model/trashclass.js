@@ -23,7 +23,7 @@ trashclass.prototype.getList = async function () {
 };
 
 trashclass.prototype.getSubClass = async function (id) {
-  return await this.table()
+  return await this.db().table('trash_point')
         .where('trash_class_id=?', [id])
         .select('id,tname,cash,point,weight');
 };
