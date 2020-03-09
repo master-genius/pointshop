@@ -9,10 +9,6 @@ var point = function (db) {
 
   this.db = db;
 
-  this.table = function () {
-    return this.db.table('point_log');
-  };
-
   this.makeId = (cstr = '') => {
     var h = crypto.createHash('sha1');
     h.update(`${cstr}${Math.random()}${Date.now()}`);
@@ -53,6 +49,8 @@ point.prototype.insert = async function (admin_id, data) {
   data.admin_id = admin_id;
   data.year = d.getFullYear();
 
+  var _db = this.db();
+
   /* let r = await this.db.transcation(async (db) => {
     let upd = {
       points : `@points ${data.point_type == 'increase' ? '+' : '-'} ${data.points}`
@@ -63,7 +61,7 @@ point.prototype.insert = async function (admin_id, data) {
 
   let r = null;
 
-  r = await this.db.table('trash_point')
+  r = await _db.table('trash_point')
         .where('id=?',[data.trash_type])
         .get('weight,cash,point');
   
@@ -73,7 +71,7 @@ point.prototype.insert = async function (admin_id, data) {
 
   data.points = parseInt(r.rows[0].point * data.trash_weight);
 
-  r = await this.db.table('point_log').insert(data);
+  r = await _db.table('point_log').insert(data);
   if (r.rowCount > 0) {
     return data.verify_code;
   }
@@ -93,13 +91,13 @@ point.prototype.list = async function (user_id, offset = 0, year = 0) {
   if (typeof year === 'number' && year > 0) {
     cond.year = year;
   }
-  let r = await this.table().where(cond).order('logtime DESC').limit(20, offset);
+  let r = await this.db().where(cond).order('logtime DESC').limit(20, offset);
   return r.rows;
 };
 
 point.prototype.count = async function (user_id) {
   var sql = 'SELECT COUNT(*) as total FROM point_log WHERE user_id=$1';
-  var r = await this.db.db.query(sql, [user_id]);
+  var r = await this.db().db.query(sql, [user_id]);
   if (r.rowCount <= 0) {
     return 0;
   }

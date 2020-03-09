@@ -8,7 +8,7 @@ var trashclass = function (db) {
   this.db = db;
 
   this.table = function () {
-    return this.db.table('trash_class');
+    return this.db().table('trash_class');
   };
 
   this.makeId = (cstr = '') => {
@@ -19,11 +19,11 @@ var trashclass = function (db) {
 };
 
 trashclass.prototype.getList = async function () {
-  return await this.db.select('id,tname');
+  return await this.table().select('id,tname');
 };
 
 trashclass.prototype.getSubClass = async function (id) {
-  return await this.db.table('trash_point')
+  return await this.table()
         .where('trash_class_id=?', [id])
         .select('id,tname,cash,point,weight');
 };

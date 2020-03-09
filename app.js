@@ -20,7 +20,10 @@ if (cluster.isWorker) {
 
   app.service.config = cfg;
   app.service.db = new pg.Pool(dbcfg);
-  app.service.pgorm = new porm(app.service.db);
+  app.service.pgorm = function () {
+    return new porm(app.service.db);
+  };
+
   app.service.http = gohttp;
   app.service.pagedir = __dirname + '/pages';
 
