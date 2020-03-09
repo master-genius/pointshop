@@ -29,24 +29,30 @@ async function setPointCode(wxmsg, db, retmsg) {
     return formatMsg(retmsg);
   }
 
-  await db.query('BEGIN');
+  try {
+    await db.query('BEGIN');
 
-  await db.query('UPDATE point_log SET code_status=1,openid=$1 WHERE id=$2', [
-    wxmsg.FromUserName, p.rows[0].id
-  ]);
-  
-  db.query(
-    `UPDATE users SET points = points+${p.rows[0].points} WHERE openid=$1`,
-    [wxmsg.FromUserName]
-  );
+    await db.query('UPDATE point_log SET code_status=1,openid=$1 WHERE id=$2', [
+      wxmsg.FromUserName, p.rows[0].id
+    ]);
+    
+    await db.query(
+      `UPDATE users SET points = points+${p.rows[0].points} WHERE openid=$1`,
+      [wxmsg.FromUserName]
+    );
 
-  r = await db.query('COMMIT');
+    r = await db.query('COMMIT');
 
-  if (r.rowCount <= 0) {
-    console.log(r);
+    if (r.rowCount <= 0) {
+      retmsg.msg = '设置积分失败，请联系管理员';
+      return formatMsg(retmsg);
+    }
+  } catch (err) {
+    db.query('ROLLBACK');
     retmsg.msg = '设置积分失败，请联系管理员';
     return formatMsg(retmsg);
   }
+
   retmsg.msg = '设置积分成功';
   return formatMsg(retmsg);
 }
