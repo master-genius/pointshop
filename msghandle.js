@@ -20,7 +20,7 @@ async function setPointCode(wxmsg, db, retmsg) {
   var checkTm = parseInt(Date.now() / 1000) - 1200;
 
   var p = await db.query(
-    'SELECT id,point_type,points,verify_code,code_time,point_status FROM point_log WHERE verify_code=$1 AND code_time >= $2 AND code_status = 0',
+    'SELECT id,point_type,points,verify_code,code_time,code_status FROM point_log WHERE verify_code=$1 AND code_time >= $2 AND code_status = 0',
     [wxmsg.Content, checkTm]
   );
 
