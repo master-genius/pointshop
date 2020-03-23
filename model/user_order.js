@@ -1,6 +1,6 @@
 'use strict';
 
-const crypto = require('crypto');
+//const crypto = require('crypto');
 
 var order = function (db) {
 
@@ -62,7 +62,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
 
     if (goods.storage < number) {
       return {
-        status : 'failed',
+        status : 'FAILED',
         errmsg : '商品库存不足'
       };
     }
@@ -70,7 +70,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
     let can_use_points = uinfo.points - uinfo.frozen_points;
     if (can_use_points < (goods.points * number) ) {
       return {
-        status : 'failed',
+        status : 'FAILED',
         errmsg : '剩余积分不足'
       };
     }
@@ -94,14 +94,17 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
     });
 
     return {
-      status : 'ok',
+      status : 'OK',
       order_id : order_id
     };
 
   });
 
   if (r.error !== null) {
-    return false;
+    return {
+      status : 'FAILED',
+      errmsg : `请求失败，请稍后再试。（${r.error.message}）`
+    };
   }
 
   return r.callbackResult;
@@ -147,7 +150,7 @@ order.prototype.cancel = async function (user_id, order_id) {
               });
     return {
       status : 'ok',
-      errmsg : 'ok'
+      errmsg : '订单已取消。'
     }
   });
 
