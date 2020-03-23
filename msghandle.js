@@ -54,7 +54,7 @@ async function setPointCode(wxmsg, db, retmsg) {
     return formatMsg(retmsg);
   }
 
-  retmsg.msg = '设置积分成功';
+  retmsg.msg = `设置积分成功，本次获取积分 ${p.rows[0].points}`;
   return formatMsg(retmsg);
 }
 
