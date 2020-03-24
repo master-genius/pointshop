@@ -28,7 +28,16 @@ order.prototype.get = async function (user_id, order_id) {
   if (r.rowCount <= 0) {
     return null;
   }
-  return r.rows[0];
+  let ord = r.rows[0];
+  r = await this.db.table('goods')
+                .where('id=?', [ r.rows[0].goods_id ])
+                .select('goods_name,points,goods_image');
+  
+  if (r.rowCount > 0) {
+    ord.goods_image = r.rows[0].goods_image;
+    ord.goods_name = r.rows[0].goods_name;
+  }
+  return ord;
 };
 
 order.prototype.orderList = async function (user_id, page=1) {
@@ -95,7 +104,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
 
     return {
       status : 'OK',
-      order_id : order_id
+      data : order_id
     };
 
   });
