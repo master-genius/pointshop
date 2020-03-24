@@ -199,7 +199,11 @@ URL参数都不是必须的，offset默认为0。每次返回20条数据。要�
 ```
 GET /user/goods-count
 
-
+返回值：
+{
+    "status" : "OK",
+    "data" : TOTAL_GOODS
+}
 
 ```
 
@@ -210,12 +214,81 @@ GET /user/goods-count
 ```
 GET /user/goods/:id
 
+返回值
+
+{
+    id : ID, // 商品ID
+    goods_name : "GOODS_NAME", //商品名称
+    points : "POINTS", //需要的积分
+    goods_image : "GOODS_IMAGES", //商品图片
+    detail : "DETAIL", //相信信息
+    storage : "STORAGE" //库存
+}
+
 ```
 
 #### 创建订单
 
 ```
 POST /user/order
+
+要提交的数据：
+    body中提交JSON文本
+    {
+        "goods_id" : "GOODS_ID",
+        "NUMBER" : 1
+    }
+
+header部分，content-type设置为text/plain
+
+
+返回值
+
+{
+    status : "OK",
+    data : "ORDER_ID"    
+}
+
+```
+
+#### 获取订单总数
+
+```
+GET /user/order-count
+
+返回值
+{
+    status : "OK",
+    data : "TOTAL-ORDER"
+}
+
+```
+
+#### 获取订单列表
+
+```
+GET /user/order
+
+URL参数支持page来指定页数
+
+返回值
+{
+    status : "OK",
+    data : [
+        {
+            id : "ID",
+            order_time : "ORDER_TIME", 
+            order_status : "ORDER_STATUS", //订单状态 0：未完成；1：已完成；2：取消
+            goods_id : "GOODS_ID",
+            points : "POINTS",
+            number : "NUMBER"
+        }
+        ...
+    ]
+}
+
+每次返回20条
+
 ```
 
 
@@ -223,11 +296,41 @@ POST /user/order
 
 ```
 GET /user/order/:id
+
+返回值
+
+{
+    status : "OK",
+    data : {
+        id : "ID",
+        order_time : "ORDER_TIME", 
+        order_status : "ORDER_STATUS", //订单状态 0：未完成；1：已完成；2：取消
+        goods_id : "GOODS_ID",
+        points : "POINTS",
+        number : "NUMBER",
+        goods_name : "",
+        goods_image : ""
+    }
+}
+
+
 ```
 
 #### 取消订单
 
 ```
 PUT /user/order/:id
+要提交的数据：
+body携带JSON文本
+{
+    "action" : "cancel"
+}
+
+返回值：
+{
+    status : "OK",
+    data : "success"
+}
+
 ```
 

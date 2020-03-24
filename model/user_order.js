@@ -24,7 +24,7 @@ var order = function (db) {
 order.prototype.get = async function (user_id, order_id) {
   let r = await this.db.table('point_order')
               .where('id=? AND user_id=?', [order_id, user_id])
-              .select('id,user_id,order_time,order_status,goods_id,points,number');
+              .select('id,order_time,order_status,goods_id,points,number');
   if (r.rowCount <= 0) {
     return null;
   }
@@ -45,7 +45,7 @@ order.prototype.orderList = async function (user_id, page=1) {
                 .where('user_id=?',[user_id])
                 .order('timeint DESC')
                 .limit(20, 20*(page-1))
-                .select('id,order_id,order_time,order_status,goods_id,points,number');
+                .select('id,order_time,order_status,goods_id,points,number');
 
   return olist.rows;
 };

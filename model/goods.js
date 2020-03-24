@@ -34,7 +34,7 @@ goods.prototype.goodsList = async function (page = 1, kwd = '') {
 };
 
 
-goods.prototype.goodsCount = async function (kwd = '') {
+goods.prototype.count = async function (kwd = '') {
   let total = await this.db.table('trash_goods')
                 .where('goods_name ILIKE ?', [`%${kwd}%`])
                 .count();
