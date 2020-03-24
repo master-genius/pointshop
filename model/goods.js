@@ -80,3 +80,4 @@ goods.prototype.update = async function (id, data) {
 
 };
 
+module.exports = goods;
