@@ -15,6 +15,7 @@ class image {
 
   async get (c) {
     c.res.encoding = 'binary';
+    var imgfile = c.service.imagepath + '/' + c.param.name;
     c.res.body = await c.helper.readFile(imgfile, 'binary');
     return ;
 
