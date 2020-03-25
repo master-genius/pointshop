@@ -14,7 +14,7 @@ class image {
   }
 
   async get (c) {
-    c.res.encoding = 'binary';    
+    c.res.encoding = 'binary';
 
     if (this.imageCache[c.param.name] !== undefined) {
       let img = this.imageCache[c.param.name];
@@ -35,7 +35,7 @@ class image {
     try {
       c.res.body = await c.helper.readFile(imgfile, 'binary');
       console.log(c.res.body.length);
-      
+
       //如果已经超过缓存大小则清空
       if (this.imageSize >= this.maxCacheSize) {
         this.imageCache = {};

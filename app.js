@@ -15,6 +15,7 @@ const fs = require('fs');
 
 var app = new titbit({
   debug : true,
+  timeout : 20000
 });
 
 app.service.imagepath = __dirname + '/goodsimages';
