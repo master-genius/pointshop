@@ -19,8 +19,7 @@ class image {
     if (this.imageCache[c.param.name] !== undefined) {
       let img = this.imageCache[c.param.name];
       c.setHeader('content-type', img['content-type']);
-      //c.res.body = img.data;
-      console.log(c.response.write(img['data'], 'binary'));
+      c.res.body = img.data;
       return ;
     }
 
@@ -34,9 +33,8 @@ class image {
     c.setHeader('content-type', ctype);
 
     try {
-      //c.res.body = await c.helper.readFile(imgfile, 'binary');
+      c.res.body = await c.helper.readFile(imgfile, 'binary');
       //console.log(c.res.body.length);
-      var data = await c.helper.readFile(imgfile, 'binary');
 
       //如果已经超过缓存大小则清空
       if (this.imageSize >= this.maxCacheSize) {
@@ -50,13 +48,33 @@ class image {
         'content-type' : ctype
       };
       this.imageSize += c.res.body.length;
-      c.setHeader('content-length', data.length);
-      console.log(c.response.write(data, 'binary'));
+      c.setHeader('content-length', c.res.body.length);
     } catch (err) {
       console.log(err);
       c.status(404);
     }
   }
+
+  /* async get (c) {
+    c.res.encoding = 'binary';
+
+    var imgfile = c.service.imagepath + '/' + c.param.name;
+
+    var ctype = 'image/jpeg';
+    if (imgfile.indexOf('.png') > 0 || imgfile.indexOf('.PNG') > 0) {
+      ctype = 'image/png';
+    }
+
+    c.setHeader('content-type', ctype);
+
+    try {
+      c.setHeader('content-length', c.res.body.length);
+      c.res.body = await c.helper.readFile(imgfile, 'binary');
+    } catch (err) {
+      console.log(err);
+      c.status(404);
+    }
+  } */
 
 }
 
