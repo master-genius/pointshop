@@ -51,7 +51,7 @@ class image {
       };
       this.imageSize += c.res.body.length;
       c.setHeader('content-length', data.length);
-      console.log(c.response.write(img['data'], 'binary'));
+      console.log(c.response.write(data, 'binary'));
     } catch (err) {
       console.log(err);
       c.status(404);
