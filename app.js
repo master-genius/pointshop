@@ -11,10 +11,20 @@ const cluster = require('cluster');
 const dbcfg = require('./dbconfig.json');
 const crypto = require('crypto');
 const porm = require('psqlorm');
+const fs = require('fs');
 
 var app = new titbit({
   debug : true,
 });
+
+app.service.imagepath = __dirname + '/goodsimages';
+if (cluster.isMaster) {
+  try {
+    fs.accessSync(app.service.imagepath, fs.constants.F_OK);
+  } catch (err) {
+    fs.mkdirSync(app.service.imagepath);
+  }
+}
 
 if (cluster.isWorker) {
 
