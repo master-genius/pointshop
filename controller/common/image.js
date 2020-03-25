@@ -17,6 +17,7 @@ class image {
     c.res.encoding = 'binary';
     var imgfile = c.service.imagepath + '/' + c.param.name;
     c.res.body = await c.helper.readFile(imgfile, 'binary');
+    console.log(c.res.body.length);
     return ;
 
     if (this.imageCache[c.param.name] !== undefined) {
