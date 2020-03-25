@@ -48,3 +48,4 @@ class goods {
 
 }
 
+module.exports = goods;

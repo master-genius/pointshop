@@ -11,3 +11,5 @@ class ordercount {
   }
 
 }
+
+module.exports = ordercount;
