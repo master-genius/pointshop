@@ -34,7 +34,7 @@ class image {
 
     try {
       c.res.body = await c.helper.readFile(imgfile, 'binary');
-      console.log(c.res.body.length);
+      //console.log(c.res.body.length);
 
       //如果已经超过缓存大小则清空
       if (this.imageSize >= this.maxCacheSize) {
