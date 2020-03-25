@@ -49,6 +49,7 @@ class image {
       this.imageSize += c.res.body.length;
 
     } catch (err) {
+      console.log(err);
       c.status(404);
     }
   }
