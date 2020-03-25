@@ -19,7 +19,8 @@ class image {
     if (this.imageCache[c.param.name] !== undefined) {
       let img = this.imageCache[c.param.name];
       c.setHeader('content-type', img['content-type']);
-      c.res.body = img.data;
+      //c.res.body = img.data;
+      console.log(c.response.write(img['data'], 'binary'));
       return ;
     }
 
@@ -33,8 +34,9 @@ class image {
     c.setHeader('content-type', ctype);
 
     try {
-      c.res.body = await c.helper.readFile(imgfile, 'binary');
+      //c.res.body = await c.helper.readFile(imgfile, 'binary');
       //console.log(c.res.body.length);
+      var data = await c.helper.readFile(imgfile, 'binary');
 
       //如果已经超过缓存大小则清空
       if (this.imageSize >= this.maxCacheSize) {
@@ -48,7 +50,8 @@ class image {
         'content-type' : ctype
       };
       this.imageSize += c.res.body.length;
-      c.setHeader('content-length', c.res.body.length);
+      c.setHeader('content-length', data.length);
+      console.log(c.response.write(img['data'], 'binary'));
     } catch (err) {
       console.log(err);
       c.status(404);
