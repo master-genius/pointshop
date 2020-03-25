@@ -15,6 +15,8 @@ class image {
 
   async get (c) {
     c.res.encoding = 'binary';
+    c.res.body = await c.helper.readFile(imgfile, 'binary');
+    return ;
 
     if (this.imageCache[c.param.name] !== undefined) {
       let img = this.imageCache[c.param.name];
