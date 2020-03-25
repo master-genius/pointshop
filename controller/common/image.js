@@ -47,7 +47,7 @@ class image {
         'content-type' : ctype
       };
       this.imageSize += c.res.body.length;
-
+      c.setHeader('content-length', c.res.body.length);
     } catch (err) {
       console.log(err);
       c.status(404);
