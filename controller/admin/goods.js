@@ -36,7 +36,7 @@ class goods {
     } catch (err) {
       c.res.body = {
         status : 'BADDATA',
-        errmsg : ''
+        errmsg : err.message
       };
     }
   }
