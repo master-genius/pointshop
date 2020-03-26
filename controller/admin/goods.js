@@ -20,7 +20,19 @@ class goods {
 
   async post (c) {
     try {
-
+      let data = JSON.parse(c.body);
+      let r = await c.service.model.goods.add(data);
+      if (r === false) {
+        c.res.body = {
+          status : 'FAILED',
+          errmsg : '创建失败。请稍候再试。'
+        };
+      } else {
+        c.res.body = {
+          status : 'OK',
+          data : r
+        };
+      }
     } catch (err) {
       c.res.body = {
         status : 'BADDATA',

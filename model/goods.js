@@ -44,7 +44,7 @@ goods.prototype.count = async function (kwd = '') {
 goods.prototype.add = async function (data) {
   data.id = this.makeId();
 
-  let r = await this.db.talbe('trash_goods')
+  let r = await this.db.table('trash_goods')
                   .insert(data);
   if (r.rowCount <= 0) {
     return false;
