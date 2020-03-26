@@ -10,7 +10,7 @@ const cfg = require('./config/config');
 const cluster = require('cluster');
 const dbcfg = require('./dbconfig.json');
 const crypto = require('crypto');
-const porm = require('psqlorm');
+const porm = require('./psqlorm');
 const fs = require('fs');
 
 var app = new titbit({

@@ -24,7 +24,7 @@ goods.prototype.get = async function (id) {
   return g.rows[0];
 };
 
-goods.prototype.goodsList = async function (page = 1, kwd = '') {
+goods.prototype.list = async function (page = 1, kwd = '') {
   let goodslist = await this.db.table('trash_goods')
                     .where('goods_name ILIKE ?', [`%${kwd}%`])
                     .limit(20, 20*(page -1))

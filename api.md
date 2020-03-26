@@ -227,6 +227,30 @@ GET /user/goods/:id
 
 ```
 
+#### 获取商品列表
+
+```
+GET /user/goods
+
+URL参数：page指定页数，默认为1
+
+返回值
+{
+    status : "OK",
+    data : [
+        {
+            id: "",
+            goods_name : "",
+            goods_image : "",
+            points : ""
+        }
+        ...
+    ]
+}
+
+每次返回20条数据。
+```
+
 #### 创建订单
 
 ```

@@ -23,7 +23,7 @@ class goods {
     let kwd = c.query.kwd ? c.query.kwd : '';
     c.res.body = {
       status : 'OK',
-      data : await c.service.model.goods.goodsList(page, kwd)
+      data : await c.service.model.goods.list(page, kwd)
     }
   }
 
