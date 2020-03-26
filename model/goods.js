@@ -1,5 +1,7 @@
 'use strict';
 
+const crypto = require('crypto');
+
 var goods = function (db) {
   if (!(this instanceof goods)) {
     return new goods(db);
