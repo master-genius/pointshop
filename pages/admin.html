@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>莫得乐色</title>
+  <link href="https://cdn.bootcss.com/foundation/6.6.1/css/foundation.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="main" class="full-container">
+    
+  </div>
+
+  <script>
+
+    if (location.href.indexOf('token=') < 0) {
+      alert('请验证token');
+    }
+
+    var urlobj = {};
+    var urlsplit = (location.href.split('?')[1]).split('&');
+    var tmp = '';
+    for(let i=0; i<urlsplit.length; i++) {
+      tmp = urlsplit[i].split('&');
+      if (tmp.length < 2) {
+        tmp.push('');
+      }
+      urlobj[tmp[1]] = tmp[2];
+    }
+    console.log(urlobj);
+
+  </script>
+
+  <script>
+
+  </script>
+</body>
+</html>
