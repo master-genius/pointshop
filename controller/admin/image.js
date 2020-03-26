@@ -10,7 +10,7 @@ class image {
   getImageList (imgpath) {
     try {
       this.images = fs.readdirSync(imgpath);
-      for (let i=0; i<images.length; i++) {
+      for (let i=0; i < this.images.length; i++) {
         this.imageMap[ images[i] ] = images[i];
       }
       this.imageCache = true;
