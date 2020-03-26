@@ -11,7 +11,7 @@ class image {
     try {
       this.images = fs.readdirSync(imgpath);
       for (let i=0; i < this.images.length; i++) {
-        this.imageMap[ images[i] ] = images[i];
+        this.imageMap[ images[i] ] = this.images[i];
       }
       this.imageCache = true;
     } catch (err) {
