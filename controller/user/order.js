@@ -32,8 +32,7 @@ class order {
         };
         return ;
       }
-      let r = await c.service.model.user_order.cancel(c.box.user.id, c.param.id);
-      return r;
+      c.res.body = await c.service.model.user_order.cancel(c.box.user.id, c.param.id);
     } catch (err) {
       c.res.body = {
         status : 'FAILED',
