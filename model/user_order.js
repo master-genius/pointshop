@@ -15,8 +15,8 @@ var order = function (db) {
     return r;
   };
 
-  this.makeId = () => {
-    return `${Date.now()}${Math.random()}${r}`;
+  this.makeId = (cstr = '') => {
+    return `${Date.now()}${Math.random()}${cstr}`;
   };
 
 };
@@ -61,7 +61,7 @@ order.prototype.count = async function (user_id) {
  * 暂时不支持一个订单多个商品，后续更新再说。
  */
 order.prototype.insert = async function (user_id, goods_id, number = 1) {
-  var order_id = this.makeId();
+  var order_id = this.makeId(user_id);
 
   let r = await this.db.transcation(async function (db) {
     let g = await db.table('trash_goods').where('id=?',[goods_id]).select('*');
