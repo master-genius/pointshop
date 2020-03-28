@@ -17,7 +17,7 @@ var sqls = [
   "create table if not exists trash_goods (id varchar(40) primary key, goods_name varchar(100) not null default '', points integer not null default 0, goods_image text not null default '', storage integer not null default 0, detail text not null default '')",
 
   //订单积分状态，0：未完成，1：已完成，2：取消
-  "create table if not exists point_order(id varchar(40) primary key, user_id varchar(40) not null default '', order_time timestamp not null default '2020-03-29', timeint integer not null default 0, order_status smallint not null default 0, goods_id varchar(40) not null default '', points integer not null default 0, number integer not null default 1, year integer not null default 0)"
+  "create table if not exists point_order(id varchar(40) primary key, user_id varchar(40) not null default '', order_time timestamp not null default '2020-03-29', timeint bigint not null default 0, order_status smallint not null default 0, goods_id varchar(40) not null default '', points integer not null default 0, number integer not null default 1, year integer not null default 0)"
 
 ];
 
