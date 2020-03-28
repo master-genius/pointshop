@@ -98,7 +98,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
       id : order_id,
       user_id : user_id,
       goods_id : goods_id,
-      order_time : `${tm.toLocaleString()}`,
+      order_time : `${tm.toLocaleString('zh-CN')}`,
       year : tm.getFullYear(),
       timeint : Date.now(),
       number : number,
