@@ -1,5 +1,10 @@
 module.exports = async (c, next) => {
 
+  if (c.routepath !== '/page/user') {
+    await next(c);
+    return ;
+  }
+
   var token = c.query.token || c.cookies['token'];
 
   if (token === undefined) {

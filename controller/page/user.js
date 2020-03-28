@@ -1,7 +1,7 @@
 class user {
 
   constructor () {
-    this.param = '/';
+    this.param = '';
   }
 
   async get (c) {
