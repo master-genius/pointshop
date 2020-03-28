@@ -133,7 +133,10 @@ class model {
   }
 
   order (ostr) {
-    this.sqlUnit.order = ostr;
+    if (this.sqlUnit.order == '') {
+      this.sqlUnit.order = 'ORDER BY ';
+    }
+    this.sqlUnit.order += ostr;
     return this;
   }
 
