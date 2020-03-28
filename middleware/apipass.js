@@ -2,7 +2,7 @@ module.exports = async (c, next) => {
   if (c.query.token === undefined) {
     c.res.body = {
       status : 'EPERMDENY',
-      errmsg : 'deny'
+      errmsg : 'deny.'
     };
     return ;
   }
