@@ -245,6 +245,10 @@ class model {
     if (typeof callback !== 'function' || callback.constructor.name !== 'AsyncFunction') {
       throw new Error('callback must be async function');
     }
+    var finalret = {
+      result : null,
+      error : err
+    };
     try {
       //var self = this;
       this.db = await this.odb.connect();
@@ -257,16 +261,14 @@ class model {
         error : null
       };
     } catch (err) {
+      finalret.error = err;
       this.db.query('ROLLBACK');
     } finally {
       this.db.release();
       this.db = this.odb;
     }
 
-    return {
-      result : null,
-      error : err
-    };
+    return finalret;
   }
 
 }
