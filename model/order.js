@@ -53,7 +53,7 @@ order.prototype.list = async function (args = {page:1, year:0, user_id:null}) {
         .where(cond)
         .order('timeint DESC')
         .limit(20, 20*(args.page-1))
-        .select('id,order_id,user_id,order_time,order_status,goods_id,points,number');
+        .select('id,user_id,order_time,order_status,goods_id,points,number');
 
   return olist.rows;
 };
