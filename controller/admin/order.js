@@ -8,20 +8,17 @@ class order {
   }
 
   async list (c) {
-    if (!c.query.page || isNaN(c.query.page) || c.query.page < 0){
-      c.query.page = 1;
-    }
-    let cond = {};
-    if (c.query.user_id) {
-      cond.user_id = c.query.user_id;
-    }
+    var tm = new Date();
+    var year = tm.getFullYear();
+    var month = tm.getMonth() + 1;
+
     if (c.query.year) {
-      cond.year = c.query.year;
+      year = c.query.year;
     }
-    if (c.query.status !== undefined) {
-      cond.order_status = c.query.status;
+    if (c.query.month) {
+      month = c.query.month;
     }
-    let olist = await c.service.model.order.list(c.query.page, cond);
+    let olist = await c.service.model.order.list(year, month);
     c.res.body = {
       status : 'OK',
       data : olist
