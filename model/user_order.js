@@ -92,11 +92,13 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
       storage : goods.storage - number
     });
     
+    var tm = new Date();
     await db.table('point_order').insert({
       id : order_id,
       user_id : user_id,
       goods_id : goods_id,
-      order_time : `${(new Date()).toLocaleString()}`,
+      order_time : `${tm.toLocaleString()}`,
+      year : tm.getFullYear(),
       timeint : Date.now(),
       number : number,
       points : goods.points * number

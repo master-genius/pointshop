@@ -7,27 +7,75 @@
   <link href="https://cdn.bootcss.com/foundation/6.6.1/css/foundation.min.css" rel="stylesheet">
 </head>
 <body>
+  <div id="gbl-alert"></div>
   <div id="main" class="full-container">
     
   </div>
 
   <script>
+    
+    var _gbl = new function () {
+
+      this.url = location.href;
+
+      this.query = {};
+
+      this.parseUrl = function () {
+        if (this.url.indexOf('?') < 0) {
+          return ;
+        }
+        var qs = this.url.split('?')[1];
+        var args = qs.split('&');
+        let tmp = [];
+        for (let i=0; i<args.length; i++) {
+          tmp = args[i].split('=');
+          if (tmp.length < 2) {
+            tmp.push('');
+          }
+          this.query[tmp[0]] = decodeURIComponent(tmp[1]);
+        }
+      };
+
+      this.alert = function (info) {
+        var adom = document.getElementById('gbl-alert');
+        if (adom === null) {
+          return ;
+        }
+        adom.style.cssText = 'z-index:99;position:fixed;width:45%;left:27.5%;min-height:30%;background:#fafaff;line-height:2.2rem;top:5%;';
+        adom.innerHTML = `<div>
+          <p style="text-align:right;"><a href="javascript:_gbl.unalert();">X</a></p>
+          ${info}
+        </div>`;
+      };
+
+      this.unalert = function () {
+        var adom = document.getElementById('gbl-alert');
+        if (adom === null) {
+          return ;
+        }
+        adom.innerHTML = '';
+        adom.style.cssText = '';
+      };
+
+      this.setToken = function (token) {
+        localStorage.setItem('modelese-token', token);
+      };
+
+      this.delToken = function () {
+        localStorage.removeItem('modelese-token');
+      };
+
+    };
 
     if (location.href.indexOf('token=') < 0) {
-      alert('请验证token');
-    }
-
-    var urlobj = {};
-    var urlsplit = (location.href.split('?')[1]).split('&');
-    var tmp = '';
-    for(let i=0; i<urlsplit.length; i++) {
-      tmp = urlsplit[i].split('&');
-      if (tmp.length < 2) {
-        tmp.push('');
+      _gbl.alert('请验证token');
+    } else {
+      _gbl.parseUrl();
+      _gbl.alert(JSON.stringify(_gbl.query));
+      if (_gbl.query.token) {
+        _gbl.setToken(_gbl.query.token);
       }
-      urlobj[tmp[1]] = tmp[2];
     }
-    console.log(urlobj);
 
   </script>
 

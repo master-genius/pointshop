@@ -8,7 +8,11 @@ class order {
   }
 
   async list (c) {
-
+    let olist = await c.service.model.order.list(c.query);
+    c.res.body = {
+      status : 'OK',
+      data : olist
+    };
   }
 
   async post (c) {
