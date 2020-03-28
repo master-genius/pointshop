@@ -90,7 +90,7 @@ class order {
       let uord = c.service.model.user_order;
       let r = await uord.insert(c.box.user.id, data.goods_id, data.number);
 
-      return r;
+      c.res.body = r;
 
     } catch (err) {
       console.log(err);
