@@ -286,7 +286,7 @@
 
         _gbl.apicall(`/admin/order?${querystring}`).then(d => {
           _gbl.renderList(document.getElementById('order-list'), d.data, (a) => {
-            return `<div class="grid-x" style="line-height:2rem;padding:0.6rem;margin-top:0.5rem;margin-bottom:0.2rem;backgrund:#fafaff;">
+            return `<div class="grid-x" style="line-height:2rem;padding:0.6rem;margin-top:0.5rem;margin-bottom:0.2rem;backgrund-color:#f2f1f3;">
                 <div class="cell small-12 medium-6 large-4">
                   订单号：${a.id}
                 </div>
