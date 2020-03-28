@@ -8,7 +8,7 @@ class order {
     let user_id = c.box.user.id;
     let morder = c.service.model.user_order;
     let page = c.query.page ? c.query.page : 1;
-    let olist = morder.orderList(user_id, page);
+    let olist = await morder.orderList(user_id, page);
     c.res.body = {
       status : 'OK',
       data : olist
