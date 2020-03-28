@@ -16,7 +16,8 @@ var order = function (db) {
   };
 
   this.makeId = (cstr = '') => {
-    return `${Date.now()}${Math.random()}${cstr}`;
+    var randnum = 1001 + parseInt((Math.random() * 8990));
+    return `d${Date.now()}${randnum}`;
   };
 
 };
