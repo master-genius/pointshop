@@ -18,6 +18,9 @@ class order {
     if (c.query.year) {
       cond.year = c.query.year;
     }
+    if (c.query.status !== undefined) {
+      cond.order_status = c.query.status;
+    }
     let olist = await c.service.model.order.list(c.query.page, cond);
     c.res.body = {
       status : 'OK',

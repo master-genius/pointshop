@@ -8,6 +8,7 @@
 </head>
 <body>
   <div id="gbl-alert"></div>
+  <div id="pages"></div>
   <div id="main" class="full-container">
     
   </div>
@@ -17,7 +18,6 @@
     var _gbl = new function () {
 
       this.url = location.href;
-
       this.query = {};
 
       this.parseUrl = function () {
@@ -41,7 +41,7 @@
         if (adom === null) {
           return ;
         }
-        adom.style.cssText = 'z-index:99;position:fixed;width:45%;left:27.5%;min-height:30%;background:#fafaff;line-height:2.2rem;top:5%;';
+        adom.style.cssText = 'z-index:99;position:fixed;width:45%;left:27.5%;min-height:30%;background:#fafaff;line-height:2.2rem;top:5%;padding:0.5rem;';
         adom.innerHTML = `<div>
           <p style="text-align:right;"><a href="javascript:_gbl.unalert();">X</a></p>
           ${info}
@@ -57,12 +57,161 @@
         adom.style.cssText = '';
       };
 
+      this.getToken = function () {
+        return localStorage.getItem('modelese-token');
+      };
+
       this.setToken = function (token) {
         localStorage.setItem('modelese-token', token);
       };
 
       this.delToken = function () {
         localStorage.removeItem('modelese-token');
+      };
+
+      this.renderList = function (adom, data, callback) {
+        if (typeof adom === 'string') {
+          adom = document.getElementById(adom);
+        }
+        if (!adom) {
+          return ;
+        }
+        var html = '';
+        for(let i=0; i<data.length; i++) {
+          html += callback(data[i]);
+        }
+        adom.innerHTML = html;
+      };
+
+      this.alertError = function (errinfo) {
+        this.alert(`<p style="color:#561234;">${errinfo}</p>`);
+        var self = this;
+        setTimeout(() => {
+          self.unalert();
+        }, 3500);
+      };
+
+      this.apicall = async function (path, options = {}) {
+        var self = this;
+        var q = '?';
+        if (path.indexOf('?') > 0) {
+          q = '&';
+        }
+        path += `${q}token=${this.getToken()}`;
+        return fetch(`https://wx.modelese.cn/${path}`, options).then(res => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            self.alertError(`${res.status}: ${res.statusText}`);
+          }
+        }, err => {
+          throw err;
+        }).catch(err => {
+          self.alertError(err.message);
+        });
+      };
+
+      this.pagedom = null;
+      this.initPage = function (id) {
+        this.pagedom = document.getElementById(id);
+      };
+
+      this.clearPage = function () {
+        if (this.pagedom) {
+          this.pagedom.innerHTML = '';
+        }
+      };
+
+      this.pages = {};
+      this.curPage = null;
+
+      this.loadPage = function (name) {
+        if (this.pagedom === null) {
+          return ;
+        }
+        if (this.pages[name] === undefined) {
+          this.alertError('页面没有发现');
+          return ;
+        }
+        var page = this.pages[name];
+        if (page === null || typeof page !== 'object') {
+          this.alertError('错误的页面对象');
+          return ;
+        }
+
+        if (this.curPage !== null) {
+          if (this.curPage.onunload && typeof this.curPage.onunload === 'function') {
+            this.curPage.onunload();
+          }
+        }
+
+        this.curPage = page;
+
+        if (page.init && typeof page.init === 'function' && !page.initFlag) {
+          page.initFlag = true;
+          page.init();
+        }
+
+        if (page.view && typeof page.view === 'function') {
+          page.view(this);
+        }
+
+        if (page.onload && typeof page.onload === 'function') {
+          page.onload(this);
+        }
+
+      };
+
+      this.showPage = function () {
+        if (this.pagedom) {
+          this.pagedom.style.cssText = 'z-index:10;position:fixed;width:86%;height:90%;background:#ffffff;left:7%;top:0.1%;';
+        }
+      };
+
+      this.hidePage = function () {
+        this.pagedom.style.cssText = 'height:0px;display:none;';
+      };
+
+      this.resizePage = function () {
+        if (this.pagedom) {
+          let dh = document.documentElement.clientHeight;
+          this.pagedom.style.minHeight = `${dh * 0.9}px`;
+        }
+      }
+
+    };
+
+    var goodsPage = new function () {
+
+      this.init = function () {
+
+      };
+
+      this.view = function (gbl) {
+
+      };
+
+      this.onload = function (gbl) {
+
+      };
+
+    };
+
+    var ordpg = new function () {
+      this.init = function () {
+        if (!sessionStorage.getItem('order-init')) {
+          sessionStorage.setItem('order-init', '1');
+          sessionStorage.setItem('order-page', '1');
+          sessionStorage.setItem('order-year', `${(new Date()).getFullYear()}`);
+        }
+      };
+
+      this.view = function (g) {
+
+      };
+
+      this.onload = function (g) {
+
       };
 
     };
@@ -75,7 +224,17 @@
       if (_gbl.query.token) {
         _gbl.setToken(_gbl.query.token);
       }
+
+      _gbl.pages.goods = goodsPage;
+      ordpg.init();
+
     }
+
+
+
+    window.onresize = function () {
+      _gbl.resizePage();
+    };
 
   </script>
 
