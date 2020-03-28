@@ -93,6 +93,7 @@ class order {
       return r;
 
     } catch (err) {
+      console.log(err);
       c.res.body = {
         status : 'BADDATA',
         errmsg : `数据格式错误。(${err.message})`
