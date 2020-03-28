@@ -68,7 +68,7 @@ async function getPoints (wxmsg, db, retmsg) {
     if (r.rowCount <= 0) {
       retmsg.msg = '未发现用户，请点击注册';
     } else {
-      retmsg.msg = `积分：${r.rows[0].points - r.rows[0].frozen_points}`;
+      retmsg.msg = `现有可用积分：${r.rows[0].points - r.rows[0].frozen_points}`;
     }
   } catch (err) {
     retmsg.msg = '系统错误，请稍候再获取积分';
