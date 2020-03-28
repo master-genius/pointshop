@@ -63,7 +63,6 @@ order.prototype.count = async function (user_id) {
  */
 order.prototype.insert = async function (user_id, goods_id, number = 1) {
   var order_id = this.makeId(user_id);
-  console.log(this.db);
   let r = await this.db().transcation(async function (db) {
     let g = await db.table('trash_goods').where('id=?',[goods_id]).select('*');
     let u = await db.table('users').where('id=?',[user_id]).select('*');
