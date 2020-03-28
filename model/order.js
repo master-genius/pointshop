@@ -40,9 +40,9 @@ order.prototype.delete = async function (id) {
 
 };
 
-order.prototype.list = async function (args = {page:1, year:0, user_id:null}) {
+order.prototype.list = async function (args = {page:1, year:0}) {
   let cond = {};
-  if (args.user_id !== null) {
+  if (args.user_id) {
     cond.user_id = args.user_id;
   }
   if (args.year && args.year > 0) {
