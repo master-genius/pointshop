@@ -1,6 +1,10 @@
 'use strict';
 
 module.exports = async (c, next) => {
+  if (c.routepath.indexOf('/user/order') == 0) {
+    await next(c);
+    return ;
+  }
   let permdeny = {
     status : 'EPERMDENY',
     errmsg : 'deny'
