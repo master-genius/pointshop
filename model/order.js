@@ -16,13 +16,14 @@ var order = function (db) {
   };
 
   this.makeId = () => {
-    return `${Date.now()}${Math.random()}${r}`;
+    var randnum = 1001 + parseInt((Math.random() * 8990));
+    return `d${Date.now()}${randnum}`;
   };
 
 };
 
 order.prototype.get = async function (id) {
-  let r = await this.db.table('point_order')
+  let r = await this.db().table('point_order')
             .where('id=?', [id])
             .select('id,user_id,order_time,order_status,goods_id,points,number');
   if (r.rowCount <= 0) {
@@ -48,7 +49,7 @@ order.prototype.list = async function (args = {page:1, year:0, user_id:null}) {
     cond.year = args.year;
   }
 
-  let olist = await this.db.table('point_order')
+  let olist = await this.db().table('point_order')
         .where(cond)
         .order('timeint DESC')
         .limit(20, 20*(args.page-1))
@@ -58,11 +59,12 @@ order.prototype.list = async function (args = {page:1, year:0, user_id:null}) {
 };
 
 order.prototype.count = async function (user_id = null) {
+  let _db = this.db();
   if (user_id === null) {
-    let total = await this.db.table('point_order').count();
+    let total = await _db.table('point_order').count();
     return total;
   }
-  let total = await this.db.table('point_order')
+  let total = await _db.table('point_order')
                 .where('user_id = ?' , [user_id])
                 .count();
   return total;
@@ -72,7 +74,7 @@ order.prototype.count = async function (user_id = null) {
  * 确认订单后，减去冻结的积分，并更新库存，更新订单状态。
  */
 order.prototype.confirm = async function (order_id) {
-  let r = await this.db.transcation(async function (db) {
+  let r = await this.db().transcation(async function (db) {
     let ret = await db.table('point_order')
                 .where('id=? AND order_status=0',[order_id]).select();
 
