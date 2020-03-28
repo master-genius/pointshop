@@ -95,7 +95,7 @@ class order {
     } catch (err) {
       c.res.body = {
         status : 'BADDATA',
-        errmsg : '数据格式错误。'
+        errmsg : `数据格式错误。(${err.message})`
       }
     }
   }
