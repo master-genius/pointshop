@@ -261,6 +261,7 @@ class model {
         error : null
       };
     } catch (err) {
+      console.log(err);
       finalret.error = err;
       this.db.query('ROLLBACK');
     } finally {
