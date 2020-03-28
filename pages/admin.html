@@ -102,10 +102,10 @@
         if (adom === null) {
           return ;
         }
-        adom.style.cssText = 'z-index:99;position:fixed;width:45%;left:27.5%;min-height:30%;background:#fafaff;line-height:2.2rem;top:5%;padding:0.5rem;';
+        adom.style.cssText = 'z-index:99;position:fixed;width:45%;left:27.5%;min-height:10%;background:#fafaff;line-height:2.2rem;top:5%;padding:0.5rem;';
         adom.innerHTML = `<div>
           <p style="text-align:right;"><a href="javascript:_gbl.unalert();">X</a></p>
-          ${info}
+          <p style="text-align:center;">${info}</p>
         </div>`;
       };
 
@@ -271,6 +271,21 @@
         }
       };
 
+      this.confirmOrder = function (oid) {
+        _gbl.apicall('/admin/order?'+oid, {
+          method : 'PUT'
+        }).then(d => {
+          if (d.status !== 'OK') {
+            _gbl.alertError(d.errmsg);
+          } else {
+            var dm = document.getElementById('order-status-'+oid);
+            if (dm) {
+              dm.innerHTML = '订单状态：已确认';
+            }
+          }
+        });
+      };
+
       this.orderStatus = {
         'd0' : '未确认',
         'd1' : '已确认',
@@ -300,8 +315,11 @@
                   消耗积分：${a.points}
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                  <strong>
+                  <strong id="order-status-${a.id}">
                     订单状态：${self.orderStatus[ `d${a.order_status}` ]}
+                    <button class="button success tiny" ondblclick="ordpg.confirmOrder('${a.id}')">
+                      双击确认
+                      </button>
                   </strong>
                 </div>
               </div>`;
@@ -317,7 +335,7 @@
         var self = this;
         setInterval(() => {
           self.orderList();
-        }, 2000);
+        }, 1200);
       };
 
     };

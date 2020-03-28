@@ -43,7 +43,7 @@ order.prototype.delete = async function (id) {
 order.prototype.list = async function (year, month) {
 
   let fields = 'point_order.id,user_id,order_time,order_status,goods_id,number,trash_goods.goods_name,point_order.points';
-  
+
   let olist = await this.db().table('point_order')
         .leftJoin('trash_goods', 'point_order.goods_id=trash_goods.id')
         .where('year=? AND month=?', [year, month])
@@ -90,7 +90,7 @@ order.prototype.confirm = async function (order_id) {
     });
 
     return {
-      status : 'ok',
+      status : 'OK',
       errmsg : '订单已确认'
     };
 
@@ -101,7 +101,7 @@ order.prototype.confirm = async function (order_id) {
   }
 
   return {
-    status : 'failed',
+    status : 'FAILED',
     errmsg : `确认订单失败，请稍后再试。（${r.error.message}）`
   };
 
