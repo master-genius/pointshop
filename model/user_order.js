@@ -173,7 +173,7 @@ order.prototype.cancel = async function (user_id, order_id) {
     };
   }
 
-  return r;
+  return r.callbackResult;
 };
 
 
