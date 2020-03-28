@@ -100,6 +100,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
       goods_id : goods_id,
       order_time : `${tm.toLocaleString('zh-CN')}`,
       year : tm.getFullYear(),
+      month : tm.getMonth() + 1,
       timeint : Date.now(),
       number : number,
       points : goods.points * number

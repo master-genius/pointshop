@@ -10,7 +10,8 @@
   <div id="gbl-alert"></div>
   <div id="pages"></div>
   <div id="main" class="full-container">
-    
+    <div style="margin-top:1.2rem;" id="order-list">
+    </div>
   </div>
 
   <script>
@@ -98,11 +99,14 @@
           q = '&';
         }
         path += `${q}token=${this.getToken()}`;
-        return fetch(`https://wx.modelese.cn/${path}`, options).then(res => {
+        if (path[0] !== '/') {
+          path = `/${path}`;
+        }
+        return fetch(`https://wx.modelese.cn${path}`, options).then(res => {
           if (res.ok) {
             return res.json();
           } else {
-            self.alertError(`${res.status}: ${res.statusText}`);
+            throw new Error(`${res.status}: ${res.statusText}`);
           }
         }, err => {
           throw err;
@@ -203,7 +207,20 @@
           sessionStorage.setItem('order-init', '1');
           sessionStorage.setItem('order-page', '1');
           sessionStorage.setItem('order-year', `${(new Date()).getFullYear()}`);
+          sessionStorage.setItem('order-status', '0');
         }
+      };
+
+      this.orderList = function () {
+
+        var page = sessionStorage.getItem('order-page');
+        var status = sessionStorage.getItem('order-status');
+        var year = sessionStorage.getItem('order-year');
+        var querystring = `page=${page}&year=${year}&status=${status}`;
+
+        _gbl.apicall(`/admin/order?${querystring}`).then(d => {
+          _gbl.renderList();
+        });
       };
 
       this.view = function (g) {
