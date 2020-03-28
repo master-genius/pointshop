@@ -7,7 +7,7 @@ var goods = function (db) {
     return new goods(db);
   }
 
-  this.db = db();
+  this.db = db;
 
   this.makeId = (cstr = '') => {
     var h = crypto.createHash('sha1');
@@ -17,7 +17,7 @@ var goods = function (db) {
 };
 
 goods.prototype.get = async function (id) {
-  let g = await this.db.table('trash_goods')
+  let g = await this.db().table('trash_goods')
                   .where('id=?',[id])
                   .select('id,goods_name,points,goods_image,detail,storage');
   if (g.rowCount <= 0) {
@@ -27,7 +27,7 @@ goods.prototype.get = async function (id) {
 };
 
 goods.prototype.list = async function (page = 1, kwd = '') {
-  let goodslist = await this.db.table('trash_goods')
+  let goodslist = await this.db().table('trash_goods')
                     .where('goods_name ILIKE ?', [`%${kwd}%`])
                     .limit(20, 20*(page -1))
                     .select('id,goods_name,goods_image,points');
@@ -36,7 +36,7 @@ goods.prototype.list = async function (page = 1, kwd = '') {
 
 
 goods.prototype.count = async function (kwd = '') {
-  let total = await this.db.table('trash_goods')
+  let total = await this.db().table('trash_goods')
                 .where('goods_name ILIKE ?', [`%${kwd}%`])
                 .count();
   return total;
@@ -46,7 +46,7 @@ goods.prototype.count = async function (kwd = '') {
 goods.prototype.add = async function (data) {
   data.id = this.makeId();
 
-  let r = await this.db.table('trash_goods')
+  let r = await this.db().table('trash_goods')
                   .insert(data);
   if (r.rowCount <= 0) {
     return false;
@@ -56,7 +56,7 @@ goods.prototype.add = async function (data) {
 
 
 goods.prototype.delete = async function (id) {
-  let r = await this.db.table('trash_goods').where('id=?',[id]).delete();
+  let r = await this.db().table('trash_goods').where('id=?',[id]).delete();
   if (r.rowCount <= 0) {
     return false;
   }
@@ -69,7 +69,7 @@ goods.prototype.update = async function (id, data) {
     delete data.id;
   }
 
-  let r = await this.db.table('trash_goods')
+  let r = await this.db().table('trash_goods')
                   .where('id=?',[id])
                   .update(data);
 

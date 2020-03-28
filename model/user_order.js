@@ -22,14 +22,15 @@ var order = function (db) {
 };
 
 order.prototype.get = async function (user_id, order_id) {
-  let r = await this.db.table('point_order')
+  var _db = this.db();
+  let r = await _db.table('point_order')
               .where('id=? AND user_id=?', [order_id, user_id])
               .select('id,order_time,order_status,goods_id,points,number');
   if (r.rowCount <= 0) {
     return null;
   }
   let ord = r.rows[0];
-  r = await this.db.table('goods')
+  r = await _db.table('goods')
                 .where('id=?', [ r.rows[0].goods_id ])
                 .select('goods_name,points,goods_image');
   
@@ -41,7 +42,7 @@ order.prototype.get = async function (user_id, order_id) {
 };
 
 order.prototype.orderList = async function (user_id, page=1) {
-  let olist = await this.db.table('point_order')
+  let olist = await this.db().table('point_order')
                 .where('user_id=?',[user_id])
                 .order('timeint DESC')
                 .limit(20, 20*(page-1))
@@ -51,7 +52,7 @@ order.prototype.orderList = async function (user_id, page=1) {
 };
 
 order.prototype.count = async function (user_id) {
-  let total = await this.db.table('point_order')
+  let total = await this.db().table('point_order')
                 .where('user_id=?',[user_id])
                 .count();
   return total;
@@ -63,7 +64,7 @@ order.prototype.count = async function (user_id) {
 order.prototype.insert = async function (user_id, goods_id, number = 1) {
   var order_id = this.makeId(user_id);
   console.log(this.db);
-  let r = await this.db.transcation(async function (db) {
+  let r = await this.db().transcation(async function (db) {
     let g = await db.table('trash_goods').where('id=?',[goods_id]).select('*');
     let u = await db.table('users').where('id=?',[user_id]).select('*');
     let goods = g.rows[0];
@@ -123,7 +124,7 @@ order.prototype.insert = async function (user_id, goods_id, number = 1) {
 };
 
 order.prototype.delete = async function (user_id, order_id) {
-  let r = await this.db.table('point_order')
+  let r = await this.db().table('point_order')
             .where('id=? AND user_id=? AND order_status>0', [order_id, user_id])
             .delete();
   if (r.rowCount <= 0) {
@@ -133,7 +134,7 @@ order.prototype.delete = async function (user_id, order_id) {
 };
 
 order.prototype.cancel = async function (user_id, order_id) {
-  let r = await this.db.transcation(async function (db) {
+  let r = await this.db().transcation(async function (db) {
     let ret = await db.table('point_order')
                   .where('id=? AND user_id=? AND order_status=0', [order_id, user_id])
                   .select();
