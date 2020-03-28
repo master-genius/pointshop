@@ -119,17 +119,17 @@ class model {
     return this;
   }
 
-  join (on, join_type = 'INNER') {
-    this.sqlUnit.join = `${join_type} JOIN ON ${on}`;
+  join (tablename, on, join_type = 'INNER') {
+    this.sqlUnit.join = `${join_type} JOIN ${tablename} ON ${on}`;
     return this;
   }
 
-  leftJoin (on) {
-    return this.join(on, 'LEFT');
+  leftJoin (tablename, on) {
+    return this.join(tablename, on, 'LEFT');
   }
 
-  rightJoin(on) {
-    return this.join(on, 'RIGHT');
+  rightJoin(tablename, on) {
+    return this.join(tablename, on, 'RIGHT');
   }
 
   order (ostr) {

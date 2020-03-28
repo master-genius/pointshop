@@ -10,11 +10,65 @@
   <div id="gbl-alert"></div>
   <div id="pages"></div>
   <div id="main" class="full-container">
-    <div style="margin-top:1.2rem;" id="order-list">
+    <div style="margin-top:1.2rem;padding:0.5rem;margin-bottom:1.5rem;">
+      <form onsubmit="return false;">
+        <div class="grid-x">
+          <div class="cell small-2 medium-2 large-1"></div>
+          <div class="cell small-5 medium-3 large-1" style="padding-right:0.2rem;">
+            <label>年</label>
+            <select id="order-year" onchange="setOrderYear(this);">
+            </select>
+          </div>
+          <div class="cell small-5 medium-3 large-1">
+            <label>月</label>
+            <select id="order-month" onchange="setOrderMonth(this);">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+        </div>
+      </form>
     </div>
+
+    <div id="order-list"></div>
+
   </div>
 
   <script>
+
+    var yeardom = document.getElementById('order-year');
+    var monthdom = document.getElementById('order-month');
+
+    (function (){
+      var tm = new Date();
+      let year = tm.getFullYear();
+      let html = '';
+      for (let i=year; i>2019; i--) {
+        html += `<option value="${i}">${i}</option>`;
+      }
+      yeardom.innerHTML = html;
+    })();
+
+    (function (){
+      var tm = new Date();
+      var month = tm.getMonth() + 1;
+      for (let i=0; i < monthdom.options.length; i++) {
+        if (monthdom.options[i].value == month) {
+          monthdom.options[i].selected = true;
+          break;
+        }
+      }
+    })();
     
     var _gbl = new function () {
 
@@ -205,30 +259,58 @@
       this.init = function () {
         if (!sessionStorage.getItem('order-init')) {
           sessionStorage.setItem('order-init', '1');
-          sessionStorage.setItem('order-page', '1');
+          /* sessionStorage.setItem('order-page', '1');
           sessionStorage.setItem('order-year', `${(new Date()).getFullYear()}`);
-          sessionStorage.setItem('order-status', '0');
+          sessionStorage.setItem('order-status', '0'); */
         }
       };
 
-      this.orderList = function () {
+      this.orderStatus = {
+        'd0' : '未确认',
+        'd1' : '已确认',
+        'd2' : '用户取消'
+      };
 
-        var page = sessionStorage.getItem('order-page');
-        var status = sessionStorage.getItem('order-status');
-        var year = sessionStorage.getItem('order-year');
-        var querystring = `page=${page}&year=${year}&status=${status}`;
+      this.orderList = function () {
+        var self = this;
+        var year = yeardom.options[yeardom.selectedIndex].value;
+        var month = monthdom.options[monthdom.selectedIndex].value;
+
+        var querystring = `year=${year}&month=${month}`;
 
         _gbl.apicall(`/admin/order?${querystring}`).then(d => {
-          _gbl.renderList();
+          _gbl.renderList(document.getElementById('order-list'), d.data, (a) => {
+            return `<div class="grid-x" style="line-height:2rem;padding:0.5rem;">
+                <div class="cell small-12 medium-6 large-4">
+                  订单号：${a.id}
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                  用户ID：${a.user_id}
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                  商品：${a.goods_name} X ${a.number}
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                  消耗积分：${a.points}
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                  <strong>
+                    订单状态：${self.orderStatus[ `d${a.order_status}` ]}
+                  </strong>
+                </div>
+              </div>`;
+          });
         });
       };
 
       this.view = function (g) {
-
+        this.orderList();
       };
 
       this.onload = function (g) {
-
+        setTimeout(() => {
+          this.orderList();
+        }, 2000);
       };
 
     };

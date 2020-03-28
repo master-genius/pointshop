@@ -40,13 +40,15 @@ order.prototype.delete = async function (id) {
 
 };
 
-order.prototype.list = async function (page = 1, cond = {}) {
+order.prototype.list = async function (year, month) {
 
+  let fields = 'point_order.id,user_id,order_time,order_status,goods_id,number,trash_goods.goods_name,point_order.points';
+  
   let olist = await this.db().table('point_order')
-        .where(cond)
-        .order('timeint DESC')
-        .limit(20, 20*(page-1))
-        .select('id,user_id,order_time,order_status,goods_id,points,number');
+        .leftJoin('trash_goods', 'point_order.goods_id=trash_goods.id')
+        .where('year=? AND month=?', [year, month])
+        .order('timeint DESC,order_status ASC')
+        .select(fields);
 
   return olist.rows;
 };
