@@ -40,19 +40,12 @@ order.prototype.delete = async function (id) {
 
 };
 
-order.prototype.list = async function (args = {page:1, year:0}) {
-  let cond = {};
-  if (args.user_id) {
-    cond.user_id = args.user_id;
-  }
-  if (args.year && args.year > 0) {
-    cond.year = args.year;
-  }
+order.prototype.list = async function (page = 1, cond = {}) {
 
   let olist = await this.db().table('point_order')
         .where(cond)
         .order('timeint DESC')
-        .limit(20, 20*(args.page-1))
+        .limit(20, 20*(page-1))
         .select('id,user_id,order_time,order_status,goods_id,points,number');
 
   return olist.rows;
