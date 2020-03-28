@@ -247,7 +247,7 @@ class model {
     }
     var finalret = {
       result : null,
-      error : err
+      error : null
     };
     try {
       //var self = this;
