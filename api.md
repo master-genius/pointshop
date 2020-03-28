@@ -260,7 +260,7 @@ POST /user/order
     body中提交JSON文本
     {
         "goods_id" : "GOODS_ID",
-        "NUMBER" : 1
+        "number" : 1
     }
 
 header部分，content-type设置为text/plain

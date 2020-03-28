@@ -13,7 +13,7 @@ module.exports = async (c, next) => {
   if (r.rowCount <= 0 || r.rows[0].outtime <= parseInt(Date.now() / 1000 ) ) {
     c.res.body = {
       status : 'EPERMDENY',
-      errmsg : 'deny'
+      errmsg : 'deny!'
     };
     return ;
   }
