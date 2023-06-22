@@ -11,8 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "gohttp": "^2.1.1",
-    "pg": "^7.18.1",
-    "psqlorm": "^1.0.4",
+    "pg": "^8.11.0",
+    "psqlorm": "^1.1.0",
     "titbit": "^5.2.2",
     "titbit-loader": "^2.1.1",
     "xml2js": "^0.4.23"
